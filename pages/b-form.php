@@ -52,36 +52,24 @@
             <div class="col-md-4">
               <div class="form-group row">
                 <label class="col-sm-3 col-form-label">Kategori</label>
-                <div class="form-group">
-                  <div class="col-md-6">
-                    <div class="form-group row">
-                      <div class="col-sm-10">
-                        <select class="form-select form-select" name="kategori_b">
-                          <option>--Pilih Kategori--</option>
-                        <?php 
-                              include('assets/koneksi.php');
-                              $query = "SELECT * FROM kategori";
-                              $q = mysqli_query($koneksi, $query);
-                              $no = 1;
-                              while ($data = mysqli_fetch_array($q)) {
-                          ?>
-                          <option value="<?=$data['kode_k']?>">
-                            <?=$data['nama_k']?>
-                          </option>
-                          
-                          <?php
-                              }
-                          ?>
-                        </select>
-                        <?php 
-                            if(isset($_SESSION['msg']['err_kat'])){
-                                echo '<span class="text-danger">'.$_SESSION['msg']['err_kat'].'</span>';
-                            }
-                        ?>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                  <?php 
+                        include('assets/koneksi.php');
+                        $query = "SELECT * FROM kategori";
+                        $q = mysqli_query($koneksi, $query);
+                    ?>
+                  <select class="form-select form-select" name="kategori_b">
+                    <option value="">--Pilih Kategori--</option>
+                    <?php  while ($data = mysqli_fetch_array($q)) { ?>
+                    <option value="<?=$data['kode_k']?>">
+                      <?=$data['nama_k']?>
+                    </option>
+                    <?php } ?>
+                  </select>
+                  <?php 
+                      if(isset($_SESSION['msg']['err_kat'])){
+                          echo '<span class="text-danger">'.$_SESSION['msg']['err_kat'].'</span>';
+                      }
+                  ?>
               </div>
             </div>
           </div>
@@ -116,36 +104,24 @@
             <div class="col-md-4">
               <div class="form-group row">
                 <label class="col-sm-3 col-form-label">Penerbit</label>
-                <div class="form-group">
-                  <div class="col-md-6">
-                    <div class="form-group row">
-                      <div class="col-sm-9">
-                        <select class="form-select form-select" name="penerbit_b">
-                          <option>penerbit</option>
-                          <?php 
-                              include('assets/koneksi.php');
-                              $query = "SELECT * FROM penerbit";
-                              $q = mysqli_query($koneksi, $query);
-                              $no = 1;
-                              while ($data = mysqli_fetch_array($q)) {
-                          ?>
-                          <option value="<?=$data['kode_p']?>">
-                            <?=$data['nama_p']?>
-                          </option>
-                          
-                          <?php
-                              }
-                          ?>
-                        </select>
-                        <?php 
-                            if(isset($_SESSION['msg']['err_penerbit'])){
-                                echo '<span class="text-danger">'.$_SESSION['msg']['err_penerbit'].'</span>';
-                            }
-                        ?>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                  <?php 
+                        include('assets/koneksi.php');
+                        $query = "SELECT * FROM penerbit";
+                        $q = mysqli_query($koneksi, $query);
+                  ?>
+                  <select class="form-select form-select" name="penerbit_b">
+                    <option value="">--Pilih Penerbit--</option>
+                    <?php while ($data = mysqli_fetch_array($q)) { ?>
+                    <option value="<?=$data['kode_p']?>">
+                      <?=$data['nama_p']?>
+                    </option>
+                    <?php } ?>
+                  </select>
+                  <?php 
+                      if(isset($_SESSION['msg']['err_penerbit'])){
+                          echo '<span class="text-danger">'.$_SESSION['msg']['err_penerbit'].'</span>';
+                      }
+                  ?>
               </div>
             </div>
           </div>
@@ -154,7 +130,7 @@
             <div class="col-md-4">
               <div class="form-group row">
                 <label class="col-sm-3 col-form-label">Tahun</label>  
-                <input type="text" class="form-control" placeholder="tahun" name="tahun_b"/>
+                <input type="date" class="form-control" placeholder="tahun" name="tahun_b"/>
                 <?php 
                   if(isset($_SESSION['msg']['err_tahun'])){
                       echo '<span class="text-danger">'.$_SESSION['msg']['err_tahun'].'</span>';
@@ -186,24 +162,16 @@
             <div class="col-md-4">
               <div class="form-group row">
                 <label class="col-sm-3 col-form-label">Bahasa</label>
-                <div class="form-group">
-                  <div class="col-md-6">
-                    <div class="form-group row">
-                      <div class="col-sm-9">
-                        <select class="form-select form-select" name="bahasa_b">
-                          <option name='bahasa'>Pilih-Bahasa</option>
-                          <option >Bahasa Indonesia</option>
-                          <option >Bahasa Inggris</option>
-                          <?php 
-                              if(isset($_SESSION['msg']['err_bahasa'])){
-                                  echo '<span class="text-danger">'.$_SESSION['msg']['err_bahasa'].'</span>';
-                              }
-                          ?>
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                <select class="form-select form-select" name="bahasa_b">
+                  <option >Pilih-Bahasa</option>
+                  <option >Bahasa Indonesia</option>
+                  <option >Bahasa Inggris</option>
+                  <?php 
+                      if(isset($_SESSION['msg']['err_bahasa'])){
+                          echo '<span class="text-danger">'.$_SESSION['msg']['err_bahasa'].'</span>';
+                      }
+                  ?>
+                </select>
               </div>
             </div>
           </div>

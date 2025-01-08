@@ -30,34 +30,36 @@
               </tr>
             </thead>
             <tbody>
-            <?php 
-                    include('assets/koneksi.php');
-                    $query = "SELECT * FROM buku";
-                    $q = mysqli_query($koneksi, $query);
-                    $no = 1;
-                    while ($data = mysqli_fetch_array($q)) {
-                ?>
-                        <tr>
-                            <th scope="row"><?= $no++ ?></th>
-                            <td><?= $data['kode_b'] ?></td>
-                            <td><?= $data['judul_b'] ?></td>
-                            <td><?= $data['kategori_b'] ?></td>
-                            <td><?= $data['isbn_b'] ?></td>
-                            <td><?= $data['penulis_b'] ?></td>
-                            <td><?= $data['penerbit_b'] ?></td>
-                            <td><?= $data['tahun'] ?></td>
-                            <td><?= $data['cover_b'] ?></td>
-                            <td><?= $data['bahasa_b'] ?></td>
-                            <td><?= $data['sinopsis_b'] ?></td>
-                            <td>
-                                <a href="pages/fungsi_buku/b_delete.php?kode_b=<?= $data['kode_b'] ?>" onclick="return confirm('Anda yakin menghapus data ini?')">Hapus</i></a> |  
-                                <a href="?page=b-form-update&kode_b=<?= $data['kode_b'] ?>">Edit</a> 
-                            </td>
-                        </tr>
-                <?php
-                    }
-                ?>
-              
+              <?php 
+                include('assets/koneksi.php');
+                $query = "SELECT * FROM buku
+                          LEFT JOIN kategori ON buku.kategori_b = kategori.kode_k
+                          LEFT JOIN penerbit ON buku.penerbit_b = penerbit.kode_p
+                          ";
+                $q = mysqli_query($koneksi, $query);
+                $no = 1;
+                while ($data = mysqli_fetch_array($q)) {
+              ?>
+                <tr>
+                    <th scope="row"><?= $no++ ?></th>
+                    <td><?= $data['kode_b'] ?></td>
+                    <td><?= $data['judul_b'] ?></td>
+                    <td><?= $data['nama_k'] ?></td>
+                    <td><?= $data['isbn_b'] ?></td>
+                    <td><?= $data['penulis_b'] ?></td>
+                    <td><?= $data['nama_p'] ?></td>
+                    <td><?= $data['tahun'] ?></td>
+                    <td>
+                      <img src="pages/fungsi_buku/image/<?= $data['cover_b'] ?>" alt="">
+                    </td>
+                    <td><?= $data['bahasa_b'] ?></td>
+                    <td><?= $data['sinopsis_b'] ?></td>
+                    <td>
+                        <a href="pages/fungsi_buku/b_delete.php?kode_b=<?= $data['kode_b'] ?>" onclick="return confirm('Anda yakin menghapus data ini?')">Hapus</i></a> |  
+                        <a href="?page=b-form-update&kode_b=<?= $data['kode_b'] ?>">Edit</a> 
+                    </td>
+                </tr>
+              <?php } ?>
             </tbody>
           </table>
         </div>
