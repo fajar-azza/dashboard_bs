@@ -20,7 +20,7 @@ if($alamat == ''){
     $_SESSION['msg']['err_alamat'] = "Data alamat tidak boleh kosong";
 }
 
-if(isset($_SESSION['msg']['err_kode']) || isset($_SESSION['msg']['err_nama']) || isset($_SESSION['msg']['err_alamat '])){
+if(isset($_SESSION['msg'])){
     header('location:../../?page=p-form');
     exit();
 }
