@@ -16,7 +16,7 @@ if($nama == ''){
     $_SESSION['msg']['err_nama'] = "Data nama tidak boleh kosong";
 }
 
-if(isset($_SESSION['msg']['err_kode']) || isset($_SESSION['msg']['err_nama'])){
+if(isset($_SESSION['msg'])){
     header('location:../../?page=k-form');
     exit();
 }

@@ -19,7 +19,7 @@ if(isset($_SESSION['msg']['err_nama'])){
 
 include('../../assets/koneksi.php');
 
-$query = "SELECT * FROM kategori WHERE nama_k='$nama' AND kode_k != 'kode_k'";
+$query = "SELECT * FROM kategori WHERE nama_k='$nama' AND kode_k != '$kode'";
 $q = mysqli_query($koneksi, $query);
 if(mysqli_num_rows($q)!=0){
     $_SESSION['msg']['error'] = "Data kategori sudah ada, periksa kode atau nama yang sama";
