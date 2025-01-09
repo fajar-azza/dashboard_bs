@@ -37,7 +37,7 @@ if($numRow == 0){
 
 // login
 $_SESSION['login'] = true;
-header('location:../../index.php?page=dashboard');
+header('location:../../dashboard/?page=dashboard');
 
 
 
