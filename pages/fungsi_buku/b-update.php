@@ -23,14 +23,12 @@ $folder = 'image/';
 
 $ekstensiValid = ['jpg', 'jpeg', 'png'];
 $ekstensiFile = strtolower(pathinfo($cover, PATHINFO_EXTENSION));
-$ekstensiGambar = explode('.', $cover);
-$ekstensiGambar = end($ekstensiGambar);
 
 // fungsi waktu
 $cover = date('l, d-m-Y  H:i:s');
 
 // generate nama baru
-$newName = strtolower(md5($cover) . '.' . $ekstensiGambar);
+$newName = strtolower(md5($cover) . '.' . $ekstensiFile);
 
 // Ambil gambar lama dari database
 $sql = "SELECT cover_b FROM buku WHERE kode_b='$kode'";
@@ -38,6 +36,38 @@ $query = mysqli_query($koneksi, $sql);
 $data = mysqli_fetch_array($query);
 $oldFile = $data['cover_b'];
 $filePath = $folder . $oldFile;
+
+// Cek apakah file gambar baru diupload
+if ($_FILES['cover_b']['name']) {
+
+    if (!in_array($ekstensiFile, $ekstensiValid)) { // Validasi ekstensi file
+        $_SESSION['msg']['err_cover'] = "Hanya file dengan ekstensi jpg, jpeg, atau png yang diperbolehkan!";
+        header('location:../../?page=b-form-update&kode_b='.$kode);
+        exit();
+    } else if ($_FILES['cover_b']['size'] > 2 * 1024 * 1024) { // Validasi ukuran file maksimal 2MB
+        $_SESSION['msg']['err_cover'] = "Ukuran file maksimal 2MB!";
+        header('location:../../?page=b-form-update&kode_b='.$kode);
+        exit();
+    }
+    // Jika gambar baru diupload, hapus gambar lama
+    if (file_exists($filePath)) {
+    unlink($filePath);  // Hapus gambar lama
+    }
+
+    // Jika validasi berhasil, upload file
+    // generate nama baru
+    $upload = move_uploaded_file($fileTmp, $folder . $newName);
+
+    // Update nama gambar baru di database
+    if ($upload) {
+    $sql = "UPDATE buku SET cover_b='$newName' WHERE kode_b='$kode'";
+    mysqli_query($koneksi, $sql);
+    }
+
+    if (!$upload) {
+        $_SESSION['msg']['err_cover'] = "Gagal meng-upload file.";
+    }
+}
 
 if($kode == ''){
     $_SESSION['msg']['err_kode'] = "Data kode tidak boleh kosong";
@@ -68,38 +98,6 @@ if($sinopsis == ''){
 }
 if ($cover == '') {
     $_SESSION['msg']['cover'] = "Pilih Gambar!";
-} else if (!in_array($ekstensiFile, $ekstensiValid)) { // Validasi ekstensi file
-    $_SESSION['msg']['cover'] = "Hanya file dengan ekstensi jpg, jpeg, atau png yang diperbolehkan!";
-} else if ($_FILES['cover']['size'] > 2 * 1024 * 1024) { // Validasi ukuran file maksimal 2MB
-    $_SESSION['msg']['cover'] = "Ukuran file maksimal 2MB!";
-} else {
-    if (isset($_SESSION['msg'])) {
-        header('location: ../../../?page=book/input-book');
-        exit();
-    }
-
-    // Cek apakah file gambar baru diupload
-    if ($_FILES['cover_b']['name']) {
-        // Jika gambar baru diupload, hapus gambar lama
-        if (file_exists($filePath)) {
-        unlink($filePath);  // Hapus gambar lama
-        }
-
-        // Jika validasi berhasil, upload file
-        // generate nama baru
-        $newName = strtolower(md5($cover) . '.' . $ekstensiGambar);
-        $upload = move_uploaded_file($fileTmp, $folder . $newName);
-    
-        // Update nama gambar baru di database
-        if ($upload) {
-        $sql = "UPDATE buku SET cover_b='$newName' WHERE kode_b='$kode'";
-        mysqli_query($koneksi, $sql);
-        }
-
-        if (!$upload) {
-            $_SESSION['msg']['cover'] = "Gagal meng-upload file.";
-        }
-    }
 }
 if( isset($_SESSION['msg']) 
     ){

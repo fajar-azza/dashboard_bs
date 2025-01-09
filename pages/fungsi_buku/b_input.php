@@ -23,8 +23,6 @@ $folder = 'image/';
 
 $ekstensiValid = ['jpg', 'jpeg', 'png'];
 $ekstensiFile = strtolower(pathinfo($cover, PATHINFO_EXTENSION));
-$ekstensiGambar = explode('.', $cover);
-$ekstensiGambar = end($ekstensiGambar);
 
 // fungsi waktu
 $cover = date('l, d-m-Y  H:i:s');
@@ -50,26 +48,27 @@ if($penerbit == ''){
 if($tahun == ''){
     $_SESSION['msg']['err_tahun'] = "Data tahun tidak boleh kosong";
 }
-if($bahasa == ' '){
-    $_SESSION['msg']['err_bahasa'] = "bahasa harus dipilih";
+if($bahasa == ''){
+    $_SESSION['msg']['err_bahasa'] = "Bahasa harus dipilih";
 }
 if($sinopsis == ''){
     $_SESSION['msg']['err_sinopsis'] = "Data sinopsis tidak boleh kosong";
 }
 if ($cover == '') {
-    $_SESSION['msg']['cover'] = "Pilih Gambar!";
+    $_SESSION['msg']['err_cover'] = "Pilih Gambar!";
  } else if (!in_array($ekstensiFile, $ekstensiValid)) { // Validasi ekstensi file
-    $_SESSION['msg']['cover'] = "Hanya file dengan ekstensi jpg, jpeg, atau png yang diperbolehkan!";
- } else if ($_FILES['cover']['size'] > 2 * 1024 * 1024) { // Validasi ukuran file maksimal 2MB
-    $_SESSION['msg']['cover'] = "Ukuran file maksimal 2MB!";
+    $_SESSION['msg']['err_cover'] = "Hanya file dengan ekstensi jpg, jpeg, atau png yang diperbolehkan!";
+ } else if ($_FILES['err_cover']['size'] > 2 * 1024 * 1024) { // Validasi ukuran file maksimal 2MB
+    $_SESSION['msg']['err_cover'] = "Ukuran file maksimal 2MB!";
  } else {
     if (isset($_SESSION['msg'])) {
        header('location: ../../../?page=book/input-book');
        exit();
     }
+    
     // Jika validasi berhasil, upload file
     // generate nama baru
-    $newName = strtolower(md5($cover) . '.' . $ekstensiGambar);
+    $newName = strtolower(md5($cover) . '.' . $ekstensiFile);
     $upload = move_uploaded_file($fileTmp, $folder . $newName);
  
     if (!$upload) {

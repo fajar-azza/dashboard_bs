@@ -163,21 +163,21 @@
               <div class="form-group row">
                 <label class="col-sm-3 col-form-label">Bahasa</label>
                 <select class="form-select form-select" name="bahasa_b">
-                  <option >Pilih-Bahasa</option>
-                  <option >Bahasa Indonesia</option>
-                  <option >Bahasa Inggris</option>
+                  <option value="">Pilih-Bahasa</option>
+                  <option value="Indonesia">Indonesia</option>
+                  <option value="Inggris">Inggris</option>
+                </select>
                   <?php 
                       if(isset($_SESSION['msg']['err_bahasa'])){
                           echo '<span class="text-danger">'.$_SESSION['msg']['err_bahasa'].'</span>';
                       }
                   ?>
-                </select>
               </div>
             </div>
           </div>
 
           <div class="form-group">
-            <label for="exampleTextarea1">Sipnosis</label>
+            <label for="exampleTextarea1">Sinopsis</label>
             <textarea class="form-control" id="exampleTextarea1" rows="6" name="sinopsis_b"></textarea>
             <?php 
                   if(isset($_SESSION['msg']['err_sinopsis'])){

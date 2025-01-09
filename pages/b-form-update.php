@@ -157,12 +157,12 @@ $data = mysqli_fetch_array($q);
                                     </span>
                                 </div>
                                 <?= $data['cover_b']; ?>
+                            </div>
                                 <?php 
                   if(isset($_SESSION['msg']['err_cover'])){
                       echo '<span class="text-danger">'.$_SESSION['msg']['err_cover'].'</span>';
                   }
                 ?>
-                            </div>
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -170,20 +170,20 @@ $data = mysqli_fetch_array($q);
                             <label class="col-sm-3 col-form-label">Bahasa</label>
                             <select class="form-select form-select" name="bahasa_b" value="<?= $data['bahasa_b'] ?>">
                                 <option value="">Pilih-Bahasa</option>
-                                <option value="Bahasa Indonesia"
-                                    <?php echo (isset($data['bahasa_b']) && $data['bahasa_b'] == 'Bahasa Indonesia') ? 'selected' : ''; ?>>
-                                    Bahasa Indonesia
+                                <option value="Indonesia"
+                                    <?php echo (isset($data['bahasa_b']) && $data['bahasa_b'] == 'Indonesia') ? 'selected' : ''; ?>>
+                                    Indonesia
                                 </option>
-                                <option value="Bahasa Inggris"
-                                    <?php echo (isset($data['bahasa_b']) && $data['bahasa_b'] == 'Bahasa Inggris') ? 'selected' : ''; ?>>
-                                    Bahasa Inggris
+                                <option value="Inggris"
+                                    <?php echo (isset($data['bahasa_b']) && $data['bahasa_b'] == 'Inggris') ? 'selected' : ''; ?>>
+                                    Inggris
                                 </option>
-                                <?php 
-                        if(isset($_SESSION['msg']['err_bahasa'])){
-                            echo '<span class="text-danger">'.$_SESSION['msg']['err_bahasa'].'</span>';
-                        }
-                    ?>
                             </select>
+                            <?php 
+                                if(isset($_SESSION['msg']['err_bahasa'])){
+                                    echo '<span class="text-danger">'.$_SESSION['msg']['err_bahasa'].'</span>';
+                                }
+                            ?>
                         </div>
                     </div>
                 </div>
