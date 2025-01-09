@@ -62,7 +62,7 @@ if ($cover == '') {
     $_SESSION['msg']['err_cover'] = "Ukuran file maksimal 2MB!";
  } else {
     if (isset($_SESSION['msg'])) {
-       header('location: ../../../?page=book/input-book');
+       header('location: ../../?page=b-form');
        exit();
     }
     

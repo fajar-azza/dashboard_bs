@@ -41,7 +41,9 @@
                             <td><?= $data['nohp_a'] ?></td>
                             <td><?= $data['email_a'] ?></td>
                             <td><?= $data['alamat_a'] ?></td>
-                            <td><?= $data['foto_a'] ?></td>
+                            <td>
+                              <img src="pages/fungsi_anggota/image/<?= $data['foto_a'] ?>" alt="">
+                            </td>
                             <td>
                                 <a href="pages/fungsi_anggota/a_delete.php?nik_a=<?= $data['nik_a'] ?>" onclick="return confirm('Anda yakin menghapus data ini?')">Hapus</i></a> |  
                                 <a href="?page=a-form-update&nik_a=<?= $data['nik_a'] ?>">Edit</a> 

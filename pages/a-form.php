@@ -20,7 +20,7 @@
             }
         ?>
 
-        <form class="form-sample" action="pages/fungsi_anggota/a_input.php" method="post">
+        <form class="form-sample" action="pages/fungsi_anggota/a_input.php" method="post" enctype="multipart/form-data">
           <p class="card-description">
             Registrasi Anggota Baru
           </p>
@@ -97,7 +97,6 @@
             <div class="col-md-6">
               <div class="form-group row">
                 <label class="col-sm-2 col-form-label">Foto</label>
-                
                 <div class="col-sm-5">
                     <input type="file" name="foto_a" class="file-upload-default">
                     <div class="input-group col-xs-12">
@@ -106,8 +105,8 @@
                         <button class="file-upload-browse btn btn-primary" type="button">Upload</button>
                       </span>
                       <?php 
-                      if(isset($_SESSION['msg']['err_nik'])){
-                          echo '<span class="text-danger">'.$_SESSION['msg']['err_nik'].'</span>';
+                      if(isset($_SESSION['msg']['err_foto'])){
+                          echo '<span class="text-danger">'.$_SESSION['msg']['err_foto'].'</span>';
                       }
                   ?>
                     </div>
