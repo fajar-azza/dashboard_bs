@@ -1,6 +1,6 @@
 <?php
 session_start();
-include('../../assets/koneksi.php');
+include('../../../assets/koneksi.php');
 
 if (!isset($_POST['btn-submit'])) {
     header('location: ../../?page=dashboard');
@@ -12,11 +12,10 @@ $nama_anggota = $_POST['nama_anggota'];
 $tgl_pinjam = $_POST['tgl_pinjam'];
 
 $buku = [];
-for ($i = 5; $i <= 5; $i++) {
-    $kode_buku = $_POST["buku$i"] ? $_POST["buku$i"] : null;
-    $judul_buku = $_POST["judul$i"] ? $_POST["judul$i"] : null;
+for ($i = 1; $i <= 5; $i++) {
+    $kode_buku = isset($_POST["buku$i"]) ? $_POST["buku$i"] : null;
     if (!empty($kode_buku)) {
-        $buku[] = ['kode_buku' => $kode_buku, 'judul_buku' => $judul_buku];
+        $buku[] = ['kode_buku' => $kode_buku];
     }
 }
 
@@ -30,26 +29,53 @@ if ($tgl_pinjam == '') {
 if (empty($buku)) {
     $_SESSION['msg']['err-buku'] = 'Pilih buku yang ingin dipinjam';
 } else {
-    $code = []; // Array untuk menyimpan kode buku yang diinput
+    $kode = []; // Array untuk menyimpan kode buku yang diinput
     foreach ($buku as $buk) {
         // Validasi apakah buku dengan kode yang sama sudah ada di input
-        if (in_array($buk['code'], $code)) {
+        if (in_array($buk['kode_buku'], $kode)) {
             $_SESSION['msg']['err-buku'] = "Tidak bisa meminjam buku dengan kode yang sama!";
             break;
         }
-        $code[] = $buk['code']; // Tambahkan kode ke array jika belum ada
+        $kode[] = $buk['kode_buku']; // Tambahkan kode ke array jika belum ada
 
         // Validasi apakah buku ada di database
-        $sql = "SELECT * FROM buku WHERE kode_b='{$buk['code']}'";
-        $query = mysqli_query($connect, $sql);
+        $sql = "SELECT * FROM buku WHERE kode_b='{$buk['kode_buku']}'";
+        $query = mysqli_query($koneksi, $sql);
         if (mysqli_num_rows($query) == 0) {
-            $_SESSION['msg']['buk'] = "Buku dengan kode '{$buk['code']}' tidak ditemukan!";
+            $_SESSION['msg']['buk'] = "Buku dengan kode '{$buk['kode_buku']}' tidak ditemukan!";
             break;
         }
     }
 }
 
 if (isset($_SESSION['msg'])) {
+    header('location: ../../?page=t-pinjam');
+    exit();
+}
+
+
+// mulai transaksi
+mysqli_autocommit($koneksi, false);
+
+try {
+    $queryTransaksi = "INSERT INTO transaksi (id, nik_anggota, tgl_pinjam, tgl_kembali) VALUES (NULL, '$nik_anggota', '$tgl_pinjam', NULL)";
+    mysqli_query($koneksi, $queryTransaksi);
+
+    $id_transaksi = mysqli_insert_id($koneksi);
+
+    foreach($buku as $buk) {
+        $buk = $buk['kode_buku'];
+        $queryDetail = "INSERT INTO detail_transaksi (id, id_transaksi, nik_anggota, kode_buku) VALUES (NULL, '$id_transaksi', '$nik_anggota', '$buk')";
+        mysqli_query($koneksi, $queryDetail);
+    }
+
+    mysqli_commit($koneksi);
+    $_SESSION['msg']['success'] = "Transaksi peminjaman buku berhasil!";
+    header('location: ../../?page=t-pinjam');
+    exit();
+} catch (Exception $e) {
+    mysqli_rollback($koneksi);
+    $_SESSION['msg']['failed'] = "Terjadi kesalahan: " . $e->getMessage();
     header('location: ../../?page=t-pinjam');
     exit();
 }
