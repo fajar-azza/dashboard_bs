@@ -23,6 +23,9 @@ for ($i = 1; $i <= 5; $i++) {
 if ($nik_anggota == '') {
     $_SESSION['msg']['err-nik'] = 'NIK tidak boleh kosong';
 }
+if (mysqli_num_rows(mysqli_query($koneksi, "SELECT * FROM transaksi WHERE nik_anggota='$nik_anggota' AND tgl_kembali IS NULL")) != 0) {
+    $_SESSION['msg']['failed'] = 'Anggota belum mengembalikan buku';
+}
 if ($tgl_pinjam == '') {
     $_SESSION['msg']['err-tgl'] = 'Tentukan tanggal peminjaman';
 }
