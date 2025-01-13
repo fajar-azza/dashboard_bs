@@ -24,8 +24,7 @@ $folder = 'image/';
 $ekstensiValid = ['jpg', 'jpeg', 'png'];
 $ekstensiFile = strtolower(pathinfo($cover, PATHINFO_EXTENSION));
 
-// fungsi waktu
-$cover = date('l, d-m-Y  H:i:s');
+
 
 if($kode == ''){
     $_SESSION['msg']['err_kode'] = "Data kode tidak boleh kosong";
@@ -54,9 +53,10 @@ if($bahasa == ''){
 if($sinopsis == ''){
     $_SESSION['msg']['err_sinopsis'] = "Data sinopsis tidak boleh kosong";
 }
-if ($cover == '') {
+if (empty ($cover)) {
     $_SESSION['msg']['err_cover'] = "Pilih Gambar!";
- } else if (!in_array($ekstensiFile, $ekstensiValid)) { // Validasi ekstensi file
+ } 
+else if(!in_array($ekstensiFile, $ekstensiValid)) { // Validasi ekstensi file
     $_SESSION['msg']['err_cover'] = "Hanya file dengan ekstensi jpg, jpeg, atau png yang diperbolehkan!";
  } else if ($_FILES['err_cover']['size'] > 2 * 1024 * 1024) { // Validasi ukuran file maksimal 2MB
     $_SESSION['msg']['err_cover'] = "Ukuran file maksimal 2MB!";
@@ -65,7 +65,8 @@ if ($cover == '') {
        header('location: ../../?page=b-form');
        exit();
     }
-    
+    // fungsi waktu
+    $cover = date('l, d-m-Y  H:i:s');
     // Jika validasi berhasil, upload file
     // generate nama baru
     $newName = strtolower(md5($cover) . '.' . $ekstensiFile);

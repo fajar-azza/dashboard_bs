@@ -10,16 +10,12 @@
                style="max-width: 300px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
                <?php echo $data['sinopsis_b']; ?>
             </p>
-            <button
-               type="button"
-               class="btn btn-primary"
-               data-bs-toggle="modal"
-               data-bs-target="#modalScrollable-<?= $data['kode_b']; ?>">
-               View Detail
-            </button>
+            <a href="?page=detail&detail=<?= $data['kode_b'] ?>" class="btn btn-primary">
+                           Detail
+                        </a>
 
             <!-- MODALS -->
-            <div class="modal fade" id="modalScrollable-<?= $data['kode_b']; ?>" tabindex="-1" aria-hidden="true">
+            <!-- <div class="modal fade" id="modalScrollable-" tabindex="-1" aria-hidden="true">
                <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
                   <div class="modal-content w-100">
                      <div class="modal-header shadow">
@@ -29,7 +25,7 @@
                            class="btn btn-close btn-lg btn-danger mb-3 me-3"
                            data-bs-dismiss="modal"></button>
                      </div>
-                     <!-- CONTENT DETAIL -->
+                     
                      <div class="modal-body">
                         <div class="d-flex align-items-center mb-5">
                            <img class="shadow rounded me-5" style="width: 35%;" src="../dashboard/pages/fungsi_buku/image/<?= $data['cover_b']; ?>" alt="">
@@ -49,7 +45,7 @@
                      </div>
                   </div>
                </div>
-            </div>
+            </div> -->
          </div>
       </div>
       

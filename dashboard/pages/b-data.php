@@ -3,6 +3,15 @@
       <div class="card-body">
         <h4 class="card-title">Tabel Data Buku</h4>
         <div class="table-responsive">
+        <style>
+            /* Membuat kolom tertentu tidak responsif */
+            .non-responsive-column {
+              white-space: nowrap; /* Teks tidak akan membungkus */
+              overflow: hidden;    /* Sembunyikan teks yang melewati batas */
+              text-overflow: ellipsis; /* Tambahkan "..." jika teks terlalu panjang */
+              max-width: 150px;    /* Tetapkan lebar maksimum kolom */
+            }
+          </style>
           <?php
             if(isset($_SESSION['msg']['success'])){
                       echo '
@@ -53,7 +62,7 @@
                       <img src="pages/fungsi_buku/image/<?= $data['cover_b'] ?>" alt="">
                     </td>
                     <td><?= $data['bahasa_b'] ?></td>
-                    <td><?= $data['sinopsis_b'] ?></td>
+                    <td class="non-responsive-column"><?= $data['sinopsis_b'] ?></td>
                     <td>
                         <a href="pages/fungsi_buku/b_delete.php?kode_b=<?= $data['kode_b'] ?>" onclick="return confirm('Anda yakin menghapus data ini?')">Hapus</i></a> |  
                         <a href="?page=b-form-update&kode_b=<?= $data['kode_b'] ?>">Edit</a> 

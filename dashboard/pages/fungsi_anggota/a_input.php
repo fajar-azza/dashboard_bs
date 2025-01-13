@@ -21,7 +21,7 @@ $ekstensiValid = ['jpg', 'jpeg', 'png'];
 $ekstensiFile = strtolower(pathinfo($foto, PATHINFO_EXTENSION));
 
 // fungsi waktu
-$foto = date('l, d-m-Y  H:i:s');
+
 
 if($nik == ''){
     $_SESSION['msg']['err_nik'] = "Data Nik tidak boleh kosong";
@@ -38,7 +38,7 @@ if($email == ''){
 if($alamat == ''){
     $_SESSION['msg']['err_alamat'] = "Data alamat tidak boleh kosong";
 }
-if ($foto == '') {
+if (empty ($foto)) {
     $_SESSION['msg']['err_foto'] = "Pilih Gambar!";
  } else if (!in_array($ekstensiFile, $ekstensiValid)) { // Validasi ekstensi file
     $_SESSION['msg']['err_foto'] = "Hanya file dengan ekstensi jpg, jpeg, atau png yang diperbolehkan!";
@@ -49,7 +49,7 @@ if ($foto == '') {
        header('location: ../../?page=a-form');
        exit();
     }
-    
+    $foto = date('l, d-m-Y  H:i:s');
     // Jika validasi berhasil, upload file
     // generate nama baru
     $newName = strtolower(md5($foto) . '.' . $ekstensiFile);

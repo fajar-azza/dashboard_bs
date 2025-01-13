@@ -154,6 +154,11 @@
                       echo '<span class="text-danger">'.$_SESSION['msg']['err_cover'].'</span>';
                   }
               ?>
+              <?php 
+                  if(isset($_SESSION['msg']['err_covers'])){
+                      echo '<span class="text-danger">'.$_SESSION['msg']['err_covers'].'</span>';
+                  }
+              ?>
                 </div>
 
               </div>

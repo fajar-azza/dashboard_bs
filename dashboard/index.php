@@ -14,7 +14,6 @@
  </head>
 
  <body>
-
      <div class="container-scroller">
          <!-- partial:partials/_navbar.html -->
          <?php include('../components/top-nav.php')?>

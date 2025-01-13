@@ -18,7 +18,7 @@ if (isset($_POST['search'])) {
            WHERE judul_b LIKE '%$title%' ORDER BY buku.judul_b ASC";
   $query = mysqli_query($koneksi, $sql);
   if (mysqli_num_rows($query) == 0) { 
-     $_SESSION['not-found'] = '<h1 class="text-center bg-warning py-5">Book not found!</h1>';
+     $_SESSION['not-found'] = '<h1 class="text-center ">Book not found!</h1>';
   }
 }
 ?>
@@ -40,37 +40,47 @@ if (isset($_POST['search'])) {
       <!-- partial:partials/_sidebar.html -->
       
       <!-- partial -->
-      <div class="main-panel min-vh-100" >
+      
         <div class="content-wrapper row mb-10 ">
+        <?php
+                $page = isset($_REQUEST['page']) && !empty($_REQUEST['page']) ? $_REQUEST['page'] : 'card';
+                  include('layout/'.$page.'.php');
+                  ?>
           
           <?php 
                if (isset($_SESSION['not-found'])) {
                   echo $_SESSION['not-found'];
                }?>
-        <?php include('layout/card.php')?>
-
-          
         
 
-          
+ 
         </div>
         <!-- content-wrapper ends -->
         <!-- partial:partials/_footer.html -->
-        <?php include('layout/footer.php')?>
+         <div>
+
+         </div>
         <!-- partial -->
       </div>
+      
+     
+      
       <!-- main-panel ends -->
     </div>
     <!-- page-body-wrapper ends -->
-  </div>
+  
   <!-- container-scroller -->
 
   <?php include('../components/script.php')?>
   <!-- End custom js for this page-->
 </body>
-
-</html>
 <?php 
 unset($_SESSION['value-title']);
 unset($_SESSION['not-found']); 
 ?>
+
+<footer class="footer fixed bottom text-center" > 
+    <span class="">Copyright © 2024 <a href="https://www.bootstrapdash.com/" class="text-muted" target="_blank">Bootstrapdash</a>. All rights reserved.</span>
+    <span class="">Hand-crafted & made with <i class="typcn typcn-heart-full-outline text-danger"></i></span>          
+</footer>
+</html>
